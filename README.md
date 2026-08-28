@@ -1,30 +1,90 @@
-{
-  "name": "shadcn-ui",
-  "private": true,
-  "description": "Build a component library with accessibility at its core.",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "typecheck": "turbo typecheck",
-    "clean": "turbo clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md,mdx,json}\"",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "turbo build --filter=./packages/cli && changeset publish"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^2.26.2",
-    "prettier": "^3.0.3",
-    "turbo": "^1.10.16"
-  },
-  "packageManager": "pnpm@8.9.0",
-  "engines": {
-    "node": ">=18"
-  }
+"use client"
+
+import * as React from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
+
+export function MainNav() {
+  const pathname = usePathname()
+
+  return (
+    <div className="mr-4 hidden md:flex">
+      <Link href="/" className="mr-4 flex items-center space-x-2 lg:mr-6" aria-label={siteConfig.name}>
+        <Icons.logo className="h-6 w-6" />
+        <span className="hidden font-bold lg:inline-block">
+          {siteConfig.name}
+        </span>
+      </Link>
+      <nav className="flex items-center gap-4 text-sm lg:gap-6" aria-label="Main Navigation">
+        <Link
+          href="/docs"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname === "/docs" ? "text-foreground" : "text-foreground/60"
+          )}
+        >
+          Docs
+        </Link>
+        <Link
+          href="/docs/components"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/docs/components")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Components
+        </Link>
+        <Link
+          href="/blocks"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/blocks")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Blocks
+        </Link>
+        <Link
+          href="/charts"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/charts")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Charts
+        </Link>
+        <Link
+          href="/themes"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/themes")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Themes
+        </Link>
+        <Link
+          href="/examples"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/examples")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Examples
+        </Link>
+      </nav>
+    </div>
+  )
 }
